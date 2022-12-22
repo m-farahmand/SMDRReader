@@ -6,11 +6,11 @@ namespace SMDRReader
     {
         static void Main(string[] args)
         {
-            using (var service = new SMDRReaderService())
-            {
-                service.Start();
-                Console.ReadKey();
-            }
+            var capture = new SMDRCapture("192.168.1.101", 2300, 168,(info)=> {
+                Console.WriteLine($"Sent data:{info.extension},{info.number}");
+            });
+            capture.Capture();
+            Console.ReadKey();
         }
     }
 }
