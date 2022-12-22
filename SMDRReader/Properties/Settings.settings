@@ -23,7 +23,10 @@
       <Value Profile="(Default)">168</Value>
     </Setting>
     <Setting Name="LogPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\\CallerIdLogFiles</Value>
+      <Value Profile="(Default)">C:\CallerIdLogFiles</Value>
+    </Setting>
+    <Setting Name="DefaultKey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">9ca529b0-6233-41ad-9c22-5de06b1260fa</Value>
     </Setting>
   </Settings>
 </SettingsFile>

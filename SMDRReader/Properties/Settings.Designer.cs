@@ -90,13 +90,25 @@ namespace SMDRReader.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\\\CallerIdLogFiles")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\CallerIdLogFiles")]
         public string LogPath {
             get {
                 return ((string)(this["LogPath"]));
             }
             set {
                 this["LogPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("9ca529b0-6233-41ad-9c22-5de06b1260fa")]
+        public string DefaultKey {
+            get {
+                return ((string)(this["DefaultKey"]));
+            }
+            set {
+                this["DefaultKey"] = value;
             }
         }
     }
