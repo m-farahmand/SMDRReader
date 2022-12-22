@@ -21,13 +21,12 @@ namespace SMDRReader
             {
                 if (!Directory.Exists(Path))
                     Directory.CreateDirectory(Path);
-                using (var stream = new StreamWriter(Path))
+                using (var stream = new StreamWriter($"{Path}\\CALLID_{GetDateISOString(DateTime.Now)}.log", true))
                 {
                     await stream.WriteLineAsync(data);
                 }
                 Console.WriteLine("Log ok");
                 return true;
-
             }
             catch (Exception ex)
             {
@@ -36,6 +35,6 @@ namespace SMDRReader
             }
 
         }
-
+        public string GetDateISOString(DateTime date) => $"{date.Year}-{date.Month}-{date.Day}";
     }
 }
