@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SMDRReader
 {
@@ -18,7 +19,7 @@ namespace SMDRReader
             CallBack = callback;
         }
 
-        public void Capture()
+        public async Task Capture()
         {
 
             while (true)
@@ -35,7 +36,6 @@ namespace SMDRReader
                     Console.WriteLine("Connected!");
                     NetworkStream stream = client.GetStream();
 
-
                     client.Client.SendString("SMDR\r\n", SocketFlags.Partial);
                     Console.WriteLine(stream.ReadString(BufferSize));
 
@@ -48,13 +48,11 @@ namespace SMDRReader
                     while ((i = stream.Read(bytes, 0, BufferSize)) != 0)
                     {
                         Parser(bytes);
-
                         Array.Clear(bytes, 0, bytes.Length);
                     }
 
                     // Shutdown and end connection
                     client.Close();
-
                 }
                 catch (SocketException e)
                 {
@@ -62,7 +60,7 @@ namespace SMDRReader
                 }
             }
         }
-        public void Parser(byte[] bytes)
+        public async Task Parser(byte[] bytes)
         {
             var lines = Encoding.ASCII.GetString(bytes).Split("\r\n".ToCharArray());
             foreach (var line in lines)
@@ -73,7 +71,8 @@ namespace SMDRReader
                 {
                     info.extension = line.Substring(19, 3);
                     info.number = ParsePhoneNumber(line.Substring(26, 26));
-                    CallBack(info);
+                    info.rawData = line;
+                    await Task.Run(()=> CallBack(info));
                     Console.WriteLine("ok");
                 }
             }
@@ -96,13 +95,14 @@ namespace SMDRReader
         }
         public static string ReadString(this NetworkStream stream, int bufferSize)
         {
-            Byte[] bytes = new Byte[bufferSize];
+            var bytes = new Byte[bufferSize];
             var len = stream.Read(bytes, 0, bytes.Length);
-            return System.Text.Encoding.ASCII.GetString(bytes, 0, len);
+            return Encoding.ASCII.GetString(bytes, 0, len);
         }
     }
     public struct SMDRStruct
     {
+        public string rawData;
         public string extension;
         public string number;
     }
