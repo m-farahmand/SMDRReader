@@ -12,25 +12,33 @@ namespace SMDRReader
     {
         public string Url { get; }
         public string Key { get; }
-
-        public WebService(string url,string key)
+        public FileService FileService = new FileService(Util.GetSettings().LogPath, "ErrorLog_{0}.log");
+        public WebService(string url, string key)
         {
             Url = url;
             Key = key;
+            //used in didar CRM
+            Url = Url.Replace("{{CallerIdKey}}", Key);
         }
 
-        public async Task<string> SendRequest(string data)
+        public async Task<string> GetRequest(string data)
         {
-            WebRequest request = WebRequest.Create(Url);
-            request.Method = "POST";
-            request.ContentType = "text/x-gwt-rpc; charset=utf-8";
-            request.Headers.Add("Authorization", $"Bearer{Key}");
-            byte[] byteArray = Encoding.UTF8.GetBytes(data);
-            request.ContentLength = byteArray.Length;
-            Stream dataStream = await request.GetRequestStreamAsync();
-            dataStream.Write(byteArray, 0, byteArray.Length);
-            dataStream.Close();
-            return "";
+            try
+            {
+                WebRequest request = WebRequest.Create(Url);
+                WebResponse response = await request.GetResponseAsync();
+                Stream dataStream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(dataStream);
+                return reader.ReadToEnd();
+            }
+            catch (Exception ex)
+            {
+                var msg = $"error[{DateTime.Now.ToString("hh:mm")}]:{ex.Message}";
+                Console.WriteLine(msg);
+                await FileService.Write(msg);
+                return "";
+            }
+
         }
     }
 }

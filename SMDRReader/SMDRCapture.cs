@@ -69,10 +69,15 @@ namespace SMDRReader
                 SMDRStruct info;
                 if (IsDataValid(line))
                 {
+
                     info.extension = line.Substring(19, 3);
-                    info.number = ParsePhoneNumber(line.Substring(26, 26));
+                    var rawNumber = line.Substring(26, 26);
+                    var codeNumber = rawNumber.Substring(0, 3);
+                    info.number = ParsePhoneNumber(rawNumber);
                     info.rawData = line;
-                    await Task.Run(()=> CallBack(info));
+                    info.dir = GetPhoneDirection(codeNumber);
+                    info.type = GetPhoneType(codeNumber);
+                    await Task.Run(() => CallBack(info));
                     Console.WriteLine("ok");
                 }
             }
@@ -83,7 +88,9 @@ namespace SMDRReader
                 return false;
             return true;
         }
-        private string ParsePhoneNumber(string data) => int.TryParse(data, out int i) ? data : data?.Length > 3 ? data.Substring(3) : "0";
+        private string ParsePhoneNumber(string data) => int.TryParse(data.Trim(' '), out int i) ? data : data?.Length > 3 ? data.Substring(3) : "0";
+        private ECallDir GetPhoneDirection(string code) => code == "<I>" ? ECallDir.input : ECallDir.output;
+        private ECallType GetPhoneType(string code) => code == "EXT" ? ECallType.extension : ECallType.number;
     }
     public static class ExMethods
     {
@@ -100,8 +107,21 @@ namespace SMDRReader
             return Encoding.ASCII.GetString(bytes, 0, len);
         }
     }
+    public enum ECallDir
+    {
+        input = 1,
+        output = 2
+    }
+    public enum ECallType
+    {
+        number = 1,
+        extension = 2,
+    }
+
     public struct SMDRStruct
     {
+        public ECallDir dir;
+        public ECallType type;
         public string rawData;
         public string extension;
         public string number;

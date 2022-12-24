@@ -10,9 +10,12 @@ namespace SMDRReader
     public class FileService
     {
         public string Path { get; }
-        public FileService(string path)
+        public string FilePatternName { get; }
+
+        public FileService(string path,string filePatternName)
         {
             Path = path;
+            FilePatternName = filePatternName;
         }
 
         public async Task<bool> Write(string data)
@@ -21,7 +24,7 @@ namespace SMDRReader
             {
                 if (!Directory.Exists(Path))
                     Directory.CreateDirectory(Path);
-                using (var stream = new StreamWriter($"{Path}\\CALLID_{GetDateISOString(DateTime.Now)}.log", true))
+                using (var stream = new StreamWriter($"{Path}\\{string.Format(FilePatternName, GetDateISOString(DateTime.Now))}", true))
                 {
                     await stream.WriteLineAsync(data);
                 }
