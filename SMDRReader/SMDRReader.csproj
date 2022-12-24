@@ -72,12 +72,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="SMDRCapture.cs" />
-    <Compile Include="SMDRReaderService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceConfigurationImpl.cs" />
-    <Compile Include="SMDRRecord.cs" />
-    <Compile Include="SMDRRecordFormatter.cs" />
+    <Compile Include="UtilService.cs" />
     <Compile Include="WebService.cs" />
   </ItemGroup>
   <ItemGroup>
