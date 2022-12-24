@@ -4,14 +4,10 @@
   <Settings>
     <Setting Name="ExtKey" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;string&gt;101=23232323232323&lt;/string&gt;
-  &lt;string&gt;102=23235325235235&lt;/string&gt;
-  &lt;string&gt;103=34534534534534&lt;/string&gt;
-&lt;/ArrayOfString&gt;</Value>
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" /&gt;</Value>
     </Setting>
     <Setting Name="ApiEndPoint" Type="System.String" Scope="User">
-      <Value Profile="(Default)">https://www.google.com</Value>
+      <Value Profile="(Default)">https://app.didar.me/api/calllog/insert?apikey={{CallerIdKey}}&amp;number={{number}}</Value>
     </Setting>
     <Setting Name="ServerAddr" Type="System.String" Scope="User">
       <Value Profile="(Default)">192.168.1.101</Value>

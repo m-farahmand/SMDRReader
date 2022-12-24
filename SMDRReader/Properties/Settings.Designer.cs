@@ -25,12 +25,8 @@ namespace SMDRReader.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
-<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
-  <string>101=23232323232323</string>
-  <string>102=23235325235235</string>
-  <string>103=34534534534534</string>
-</ArrayOfString>")]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
+            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" />")]
         public global::System.Collections.Specialized.StringCollection ExtKey {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["ExtKey"]));
@@ -42,7 +38,7 @@ namespace SMDRReader.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://www.google.com")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://app.didar.me/api/calllog/insert?apikey={{CallerIdKey}}&number={{number}}")]
         public string ApiEndPoint {
             get {
                 return ((string)(this["ApiEndPoint"]));
