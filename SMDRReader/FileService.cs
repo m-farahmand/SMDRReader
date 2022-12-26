@@ -28,7 +28,6 @@ namespace SMDRReader
                 {
                     await stream.WriteLineAsync(data);
                 }
-                Console.WriteLine("Log ok");
                 return true;
             }
             catch (Exception ex)

@@ -65,21 +65,19 @@ namespace SMDRReader
             var lines = Encoding.ASCII.GetString(bytes).Split("\r\n".ToCharArray());
             foreach (var line in lines)
             {
-                Console.WriteLine(line);
-                SMDRStruct info;
-                if (IsDataValid(line))
-                {
+                if (!IsDataValid(line))
+                    continue;
 
-                    info.extension = line.Substring(19, 3);
-                    var rawNumber = line.Substring(26, 26);
-                    var codeNumber = rawNumber.Substring(0, 3);
-                    info.number = ParsePhoneNumber(rawNumber);
-                    info.rawData = line;
-                    info.dir = GetPhoneDirection(codeNumber);
-                    info.type = GetPhoneType(codeNumber);
-                    await Task.Run(() => CallBack(info));
-                    Console.WriteLine("ok");
-                }
+                SMDRStruct info;
+                Console.WriteLine(line);
+                info.extension = line.Substring(19, 3);
+                var rawNumber = line.Substring(26, 26);
+                var codeNumber = rawNumber.Substring(0, 3);
+                info.number = ParsePhoneNumber(rawNumber);
+                info.rawData = line;
+                info.dir = GetPhoneDirection(codeNumber);
+                info.type = GetPhoneType(codeNumber);
+                await Task.Run(() => CallBack(info));
             }
         }
         private bool IsDataValid(string data)
